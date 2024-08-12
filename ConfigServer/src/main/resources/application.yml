@@ -1,0 +1,23 @@
+spring:
+  application:
+   name: "ConfigServer"
+
+  profiles:
+    # active: native
+    active: git
+  cloud:
+    config:
+      server:
+        #native:
+        #search-location: "classpath:/config"
+        #search-location:
+
+        git:
+          uri: "https://github.com/vermaji9045/public-config.git"
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+
+server:
+  port: 8071
