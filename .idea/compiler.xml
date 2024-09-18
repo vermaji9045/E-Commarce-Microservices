@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Inventory-Service" />
         <module name="eurekaserver" />
+        <module name="Gatewayserver" />
         <module name="ConfigServer" />
         <module name="OrderService" />
         <module name="Product-Service" />
@@ -22,6 +23,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ConfigServer" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
+      <module name="Gatewayserver" options="-parameters" />
       <module name="Inventory-Service" options="-parameters" />
       <module name="OrderService" options="-parameters" />
       <module name="Product-Service" options="-parameters" />

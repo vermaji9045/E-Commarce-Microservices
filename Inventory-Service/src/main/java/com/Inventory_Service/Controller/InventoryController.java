@@ -3,8 +3,9 @@ package com.Inventory_Service.Controller;
 
 import com.Inventory_Service.Dto.AddInventoryDto;
 import com.Inventory_Service.Dto.InventoryDto;
+import com.Inventory_Service.Dto.ResponseDto;
+import com.Inventory_Service.InventoryConstants.InventoryConstants;
 import com.Inventory_Service.Service.InventoryService;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping(path = "/api/inventory")
+@RequestMapping(path="/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Slf4j
 public class InventoryController {
 
@@ -23,11 +22,13 @@ public class InventoryController {
     private InventoryService inventoryService;
 
     @GetMapping("/fetch")
-    @ResponseStatus(HttpStatus.OK)
-    public List<InventoryDto> isInStock(@RequestParam List<String> skuCode)
+    public ResponseEntity<InventoryDto> isInStock(@RequestParam String skuCode)
     {
-        log.info("Recived inventory check request for skuCode: {}",skuCode);
-        return inventoryService.isInStock(skuCode);
+
+        InventoryDto inventoryDto=inventoryService.isInStock(skuCode);
+       return ResponseEntity
+               .status(HttpStatus.OK)
+               .body(inventoryDto);
     }
 
 
@@ -38,4 +39,23 @@ public class InventoryController {
         inventoryService.addInventory(inventoryDto);
 
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDto>update(@RequestBody InventoryDto inventoryDto)
+    {
+        boolean isupdate= inventoryService.updateInventory(inventoryDto);
+        if (isupdate)
+        {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ResponseDto(InventoryConstants.STATUS_200, InventoryConstants.MESSAGE_200));
+        }
+        else {
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseDto(InventoryConstants.STATUS_417, InventoryConstants.MESSAGE_417_UPDATE));
+        }
+    }
+
 }

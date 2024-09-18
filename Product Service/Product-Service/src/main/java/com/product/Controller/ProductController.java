@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(path = "/api/product",produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/api",produces = {MediaType.APPLICATION_JSON_VALUE})
 
 public class ProductController {
     @Autowired
